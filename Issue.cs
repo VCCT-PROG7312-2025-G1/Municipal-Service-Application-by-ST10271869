@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Municipal_Service_Application
 {
@@ -10,11 +9,11 @@ namespace Municipal_Service_Application
         public string Category { get; set; }
         public string Description { get; set; }
         public DateTime DateReported { get; set; }
-        public List<string> AttachedFiles { get; set; }
+        public FileLinkedList AttachedFiles { get; set; } // <-- custom linked list
 
         public Issue()
         {
-            AttachedFiles = new List<string>();
+            AttachedFiles = new FileLinkedList();
             DateReported = DateTime.Now;
         }
     }
