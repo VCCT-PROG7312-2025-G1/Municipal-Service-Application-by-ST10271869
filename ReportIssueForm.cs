@@ -33,7 +33,7 @@ namespace Municipal_Service_Application
             this.Size = new Size(520, 620);
             this.Text = "Report an Issue";
             this.StartPosition = FormStartPosition.CenterParent;
-            this.BackColor = Color.FromArgb(245, 245, 245);
+            this.BackColor = Color.White; // clean, modern base
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.Font = new Font("Segoe UI", 9);
@@ -42,67 +42,88 @@ namespace Municipal_Service_Application
             var titleLabel = new Label
             {
                 Text = "Report a Municipal Issue",
-                Font = new Font("Segoe UI", 14, FontStyle.Bold),
+                Font = new Font("Segoe UI", 16, FontStyle.Bold),
                 AutoSize = false,
-                Size = new Size(460, 30),
+                Size = new Size(400, 40),
                 Location = new Point(30, 10),
-                ForeColor = Color.FromArgb(30, 80, 130),
+                ForeColor = Color.FromArgb(0, 122, 51), // SA green
                 TextAlign = ContentAlignment.MiddleLeft
             };
 
+            
+            var logo = new PictureBox
+            {
+                Image = Properties.Resources.coat_of_arms,
+                SizeMode = PictureBoxSizeMode.Zoom,
+                Location = new Point(430, 10),
+                Size = new Size(60, 40)
+            };
+
             // Location
-            var lblLocation = new Label { Text = "Location:", Location = new Point(30, 50), AutoSize = true };
-            txtLocation = new TextBox { Location = new Point(120, 48), Size = new Size(360, 25) };
+            var lblLocation = new Label { Text = "Location:", Location = new Point(30, 60), AutoSize = true };
+            txtLocation = new TextBox { Location = new Point(120, 58), Size = new Size(360, 25) };
 
             // Category
-            var lblCategory = new Label { Text = "Category:", Location = new Point(30, 90), AutoSize = true };
-            cmbCategory = new ComboBox { Location = new Point(120, 88), Size = new Size(250, 25), DropDownStyle = ComboBoxStyle.DropDownList };
+            var lblCategory = new Label { Text = "Category:", Location = new Point(30, 100), AutoSize = true };
+            cmbCategory = new ComboBox
+            {
+                Location = new Point(120, 98),
+                Size = new Size(250, 25),
+                DropDownStyle = ComboBoxStyle.DropDownList
+            };
             cmbCategory.Items.AddRange(new string[] {
                 "Road Maintenance", "Water & Sewage", "Electricity",
-                "Waste Management", "Parks & Recreation", "Street Lighting",
-                "Traffic Signals", "Other"
+                "Waste Management", "Parks & Recreation", "Street LightS",
+                "Robot Outages", "Other"
             });
 
             // Description
-            var lblDescription = new Label { Text = "Description:", Location = new Point(30, 130), AutoSize = true };
+            var lblDescription = new Label { Text = "Description:", Location = new Point(30, 140), AutoSize = true };
             txtDescription = new TextBox
             {
-                Location = new Point(30, 155),
+                Location = new Point(30, 165),
                 Size = new Size(450, 120),
                 Multiline = true,
                 ScrollBars = ScrollBars.Vertical
             };
 
             // Files
-            var lblFiles = new Label { Text = "Attachments:", Location = new Point(30, 285), AutoSize = true };
+            var lblFiles = new Label { Text = "Attachments:", Location = new Point(30, 295), AutoSize = true };
             var btnAddFile = new Button
             {
                 Text = "Add File/Image",
-                Location = new Point(120, 280),
-                Size = new Size(120, 30),
+                Location = new Point(120, 290),
+                Size = new Size(140, 32),
                 FlatStyle = FlatStyle.Flat,
-                BackColor = Color.FromArgb(0, 120, 215),
-                ForeColor = Color.White
+                BackColor = Color.Goldenrod, //  gold
+                ForeColor = Color.White,
+                Font = new Font("Segoe UI", 9, FontStyle.Bold)
             };
             btnAddFile.FlatAppearance.BorderSize = 0;
             btnAddFile.Click += BtnAddFile_Click;
 
-            lstAttachedFiles = new ListBox { Location = new Point(30, 320), Size = new Size(450, 80) };
+            lstAttachedFiles = new ListBox { Location = new Point(30, 330), Size = new Size(450, 80) };
 
             // Progress bar
-            var lblProgress = new Label { Text = "Report Progress:", Location = new Point(30, 410), AutoSize = true };
-            progressBar = new ProgressBar { Location = new Point(30, 435), Size = new Size(450, 20), Value = 0 };
+            var lblProgress = new Label { Text = "Report Progress:", Location = new Point(30, 420), AutoSize = true };
+            progressBar = new ProgressBar
+            {
+                Location = new Point(30, 445),
+                Size = new Size(450, 20),
+                Value = 0,
+                ForeColor = Color.FromArgb(0, 122, 51) // green
+            };
 
             // Buttons
             var btnSubmit = new Button
             {
-                Text = "✔ Submit Report",
-                Location = new Point(300, 470),
-                Size = new Size(120, 36),
+                Text = "Submit Report",
+                Location = new Point(280, 490),
+                Size = new Size(140, 38),
                 FlatStyle = FlatStyle.Flat,
-                BackColor = Color.FromArgb(34, 139, 34),
+                BackColor = Color.FromArgb(0, 122, 51), // green
                 ForeColor = Color.White,
-                Font = new Font("Segoe UI", 9, FontStyle.Bold)
+                Font = new Font("Segoe UI", 10, FontStyle.Bold)
             };
             btnSubmit.FlatAppearance.BorderSize = 0;
             btnSubmit.Click += BtnSubmit_Click;
@@ -110,23 +131,24 @@ namespace Municipal_Service_Application
             var btnCancel = new Button
             {
                 Text = "Cancel",
-                Location = new Point(430, 470),
-                Size = new Size(60, 36),
+                Location = new Point(430, 490),
+                Size = new Size(70, 38),
                 FlatStyle = FlatStyle.Flat,
-                BackColor = Color.FromArgb(200, 30, 30),
-                ForeColor = Color.White
+                BackColor = Color.Firebrick,
+                ForeColor = Color.White,
+                Font = new Font("Segoe UI", 9, FontStyle.Bold)
             };
             btnCancel.FlatAppearance.BorderSize = 0;
             btnCancel.Click += (s, e) => { this.DialogResult = DialogResult.Cancel; this.Close(); };
 
             // Add controls
             this.Controls.AddRange(new Control[] {
-                titleLabel, lblLocation, txtLocation, lblCategory, cmbCategory,
+                titleLabel, logo, lblLocation, txtLocation, lblCategory, cmbCategory,
                 lblDescription, txtDescription, lblFiles, btnAddFile, lstAttachedFiles,
                 lblProgress, progressBar, btnSubmit, btnCancel
             });
 
-            // Progress attachments
+            // Progress events
             txtLocation.TextChanged += UpdateProgress;
             cmbCategory.SelectedIndexChanged += UpdateProgress;
             txtDescription.TextChanged += UpdateProgress;
@@ -155,7 +177,8 @@ namespace Municipal_Service_Application
                     UpdateProgress(sender, e);
 
                     if (AttachedFiles.Count == 1)
-                        MessageBox.Show("Great — adding attachments helps us resolve issues faster.", "Thanks!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Great — adding attachments helps us resolve issues faster.",
+                            "Thanks!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
@@ -185,9 +208,12 @@ namespace Municipal_Service_Application
             IssueDescription = txtDescription.Text.Trim();
 
             // Close with OK so the caller picks up properties and AttachedFiles
-            MessageBox.Show("Thank you — your report has been received.", "Submitted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Thank you — your report has been received.",
+                "Submitted", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
     }
 }
+
+//__________________________________________________________END OF FILE________________________________________________________________\\

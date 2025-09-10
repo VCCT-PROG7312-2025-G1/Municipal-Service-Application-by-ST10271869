@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+//https://stackoverflow.com/questions/982388/how-to-implement-a-linked-list-in-c 
+
 
 namespace Municipal_Service_Application
 {
@@ -41,3 +43,5 @@ namespace Municipal_Service_Application
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }
+
+//__________________________________________________________END OF FILE________________________________________________________________\\

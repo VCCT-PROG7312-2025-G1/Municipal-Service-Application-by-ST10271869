@@ -24,35 +24,74 @@ namespace Municipal_Service_Application
         {
             // Form
             this.Size = new Size(900, 600);
-            this.Text = "Municipal Service Application";
+            this.Text = "Municipal Service Application - RSA Municipal Portal";
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Font = new Font("Segoe UI", 9);
-            this.BackColor = Color.FromArgb(250, 250, 250);
+            this.BackColor = Color.White;
 
-            // Header
-            var header = new Panel { Dock = DockStyle.Top, Height = 70, BackColor = Color.FromArgb(20, 90, 150) };
+            // Header 
+            // Header panel using TableLayoutPanel
+            var header = new Panel
+            {
+                Dock = DockStyle.Top,
+                Height = 90, // tall enough for 2-line title
+                BackColor = Color.FromArgb(0, 120, 71)
+            };
+
+            // TableLayoutPanel to organize label and logo
+            var headerTable = new TableLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                ColumnCount = 2,
+                RowCount = 1
+            };
+            headerTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F)); // label fills available space
+            headerTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 100F)); // fixed logo width
+            headerTable.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+
+            // Title label
             var lblTitle = new Label
             {
-                Text = "Municipal Services Portal",
+                Text = "Municipal Portal\nSouth African Services",
                 ForeColor = Color.White,
                 Font = new Font("Segoe UI", 16, FontStyle.Bold),
                 Dock = DockStyle.Fill,
                 TextAlign = ContentAlignment.MiddleLeft,
-                Padding = new Padding(20, 0, 0, 0)
+                Padding = new Padding(20, 0, 0, 0),
+                AutoSize = false,
+                AutoEllipsis = true
             };
-            header.Controls.Add(lblTitle);
+
+            // Logo picture
+            var logo = new PictureBox
+            {
+                Image = Properties.Resources.coat_of_arms,
+                SizeMode = PictureBoxSizeMode.Zoom,
+                Dock = DockStyle.Fill
+            };
+
+            // Add controls to TableLayoutPanel
+            headerTable.Controls.Add(lblTitle, 0, 0);
+            headerTable.Controls.Add(logo, 1, 0);
+
+            // Add TableLayoutPanel to header panel
+            header.Controls.Add(headerTable);
+
+            // Add header panel to form
             this.Controls.Add(header);
 
-            // Left navigation
+
+            // Left navigation 
             var nav = new Panel { Width = 260, Dock = DockStyle.Left, BackColor = Color.WhiteSmoke };
+
             var btnReportIssues = new Button
             {
                 Text = "Report Issue",
                 Size = new Size(220, 50),
                 Location = new Point(20, 40),
                 FlatStyle = FlatStyle.Flat,
-                BackColor = Color.FromArgb(0, 123, 255),
-                ForeColor = Color.White,
+                BackColor = Color.FromArgb(255, 184, 28), // SA Gold
+                ForeColor = Color.Black,
                 Font = new Font("Segoe UI", 11, FontStyle.Bold)
             };
             btnReportIssues.FlatAppearance.BorderSize = 0;
@@ -83,10 +122,9 @@ namespace Municipal_Service_Application
             nav.Controls.Add(btnReportIssues);
             nav.Controls.Add(btnEvents);
             nav.Controls.Add(btnStatus);
-
             this.Controls.Add(nav);
 
-            // Content panel (right) with DataGridView
+            // Content panel 
             contentPanel = new Panel { Dock = DockStyle.Fill, BackColor = Color.White };
             dgvIssues = new DataGridView
             {
@@ -95,7 +133,8 @@ namespace Municipal_Service_Application
                 AllowUserToAddRows = false,
                 RowHeadersVisible = false,
                 SelectionMode = DataGridViewSelectionMode.FullRowSelect,
-                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
+                BackgroundColor = Color.White
             };
 
             // columns
@@ -105,12 +144,12 @@ namespace Municipal_Service_Application
             dgvIssues.Columns.Add("colDate", "Date Reported");
             dgvIssues.Columns.Add("colAttachments", "Attachments");
 
-            // simple style
+            // SA-styled headers
             dgvIssues.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            dgvIssues.ColumnHeadersDefaultCellStyle.BackColor = Color.Black;
+            dgvIssues.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
             dgvIssues.EnableHeadersVisualStyles = false;
-            dgvIssues.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(240, 240, 240);
 
-            // double-click view details
             dgvIssues.CellDoubleClick += DgvIssues_CellDoubleClick;
 
             contentPanel.Controls.Add(dgvIssues);
@@ -150,7 +189,7 @@ namespace Municipal_Service_Application
             dgvIssues.Rows.Clear();
             foreach (var issue in reportedIssues)
             {
-                // show number of attachments (using the FileLinkedList.Count)
+                // show number of attachments 
                 int attachCount = issue.AttachedFiles?.Count ?? 0;
                 dgvIssues.Rows.Add(issue.Id, issue.Location, issue.Category, issue.DateReported.ToString("g"), attachCount);
             }
@@ -187,3 +226,5 @@ namespace Municipal_Service_Application
         }
     }
 }
+
+//____________________________________________END OF FILE____________________________________________________//
