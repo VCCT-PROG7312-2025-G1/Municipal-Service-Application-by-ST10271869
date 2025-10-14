@@ -34,7 +34,7 @@ namespace Municipal_Service_Application
             var header = new Panel
             {
                 Dock = DockStyle.Top,
-                Height = 90, // tall enough for 2-line title
+                Height = 90, // Height tall enough for 2-line title
                 BackColor = Color.FromArgb(0, 120, 71)
             };
 
@@ -62,7 +62,7 @@ namespace Municipal_Service_Application
                 AutoEllipsis = true
             };
 
-            // Logo picture
+            // Logo 
             var logo = new PictureBox
             {
                 Image = Properties.Resources.coat_of_arms,
@@ -70,14 +70,14 @@ namespace Municipal_Service_Application
                 Dock = DockStyle.Fill
             };
 
-            // Add controls to TableLayoutPanel
+            // controls to TableLayoutPanel
             headerTable.Controls.Add(lblTitle, 0, 0);
             headerTable.Controls.Add(logo, 1, 0);
 
-            // Add TableLayoutPanel to header panel
+            // TableLayoutPanel to header panel
             header.Controls.Add(headerTable);
 
-            // Add header panel to form
+            // header panel to form
             this.Controls.Add(header);
 
 
@@ -172,7 +172,7 @@ namespace Municipal_Service_Application
                         Category = reportForm.IssueCategory,
                         Description = reportForm.IssueDescription,
                         DateReported = DateTime.Now,
-                        AttachedFiles = reportForm.AttachedFiles.Clone() // deep copy
+                        AttachedFiles = reportForm.AttachedFiles.Clone() 
                     };
 
                     reportedIssues.Add(issue);
@@ -215,7 +215,7 @@ namespace Municipal_Service_Application
 
         private void ShowIssueDetails(Issue issue)
         {
-            // build a readable message (do NOT convert to List)
+            
             var msg = $"ID: {issue.Id}\nLocation: {issue.Location}\nCategory: {issue.Category}\nDate: {issue.DateReported:g}\n\nDescription:\n{issue.Description}\n\nAttachments:\n";
             foreach (var path in issue.AttachedFiles)
             {
