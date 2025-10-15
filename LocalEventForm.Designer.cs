@@ -2,7 +2,9 @@
 {
     partial class LocalEventsForm
     {
-       
+        //https://chatgpt.com/ 
+
+
         /// Required designer variable.
         private System.ComponentModel.IContainer components = null;
 
