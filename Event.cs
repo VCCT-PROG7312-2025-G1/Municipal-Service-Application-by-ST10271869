@@ -11,8 +11,6 @@ namespace Municipal_Service_Application
         public DateTime Date { get; set; }
         public string Description { get; set; }
 
-     
-        
         public Event(string title, string description, DateTime date, string catergory)
         {
             Title = title;

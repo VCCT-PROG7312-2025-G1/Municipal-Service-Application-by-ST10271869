@@ -7,7 +7,6 @@ namespace Municipal_Service_Application
 {
     public partial class ReportIssueForm : Form
     {
-        // Public properties to return data
         public string IssueLocation { get; private set; }
         public string IssueCategory { get; private set; }
         public string IssueDescription { get; private set; }

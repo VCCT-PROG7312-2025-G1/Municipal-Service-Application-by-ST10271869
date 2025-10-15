@@ -2,14 +2,12 @@
 {
     partial class LocalEventsForm
     {
-        /// <summary>
+       
         /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
+  
         /// Clean up any resources being used.
-        /// </summary>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -21,10 +19,8 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
+        /// Required method
         /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             this.pnlHeader = new System.Windows.Forms.Panel();
@@ -43,9 +39,9 @@
             this.pnlFilters.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEvents)).BeginInit();
             this.SuspendLayout();
-            // 
+ 
             // pnlHeader
-            // 
+ 
             this.pnlHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(71)))));
             this.pnlHeader.Controls.Add(this.lblHeader);
             this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
@@ -53,9 +49,9 @@
             this.pnlHeader.Name = "pnlHeader";
             this.pnlHeader.Size = new System.Drawing.Size(1000, 80);
             this.pnlHeader.TabIndex = 0;
-            // 
+
             // lblHeader
-            // 
+
             this.lblHeader.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblHeader.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
             this.lblHeader.ForeColor = System.Drawing.Color.White;
@@ -65,9 +61,9 @@
             this.lblHeader.TabIndex = 0;
             this.lblHeader.Text = "Local Events & Announcements";
             this.lblHeader.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
+     
             // pnlFilters
-            // 
+     
             this.pnlFilters.BackColor = System.Drawing.Color.WhiteSmoke;
             this.pnlFilters.Controls.Add(this.lblCategory);
             this.pnlFilters.Controls.Add(this.lblSearch);
@@ -79,18 +75,18 @@
             this.pnlFilters.Padding = new System.Windows.Forms.Padding(20, 15, 20, 15);
             this.pnlFilters.Size = new System.Drawing.Size(1000, 100);
             this.pnlFilters.TabIndex = 1;
-            // 
+      
             // txtSearch
-            // 
+     
             this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.txtSearch.Location = new System.Drawing.Point(120, 20);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(350, 30);
             this.txtSearch.TabIndex = 0;
             this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
-            // 
+    
             // cmbCategoryFilter
-            // 
+  
             this.cmbCategoryFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCategoryFilter.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.cmbCategoryFilter.FormattingEnabled = true;
@@ -99,9 +95,9 @@
             this.cmbCategoryFilter.Size = new System.Drawing.Size(350, 31);
             this.cmbCategoryFilter.TabIndex = 1;
             this.cmbCategoryFilter.SelectedIndexChanged += new System.EventHandler(this.cmbCategoryFilter_SelectedIndexChanged);
-            // 
+       
             // dgvEvents
-            // 
+     
             this.dgvEvents.AllowUserToAddRows = false;
             this.dgvEvents.AllowUserToDeleteRows = false;
             this.dgvEvents.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
@@ -127,41 +123,41 @@
             this.dgvEvents.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvEvents.Size = new System.Drawing.Size(1000, 420);
             this.dgvEvents.TabIndex = 2;
-            // 
+   
             // colTitle
-            // 
+    
             this.colTitle.FillWeight = 25F;
             this.colTitle.HeaderText = "Title";
             this.colTitle.MinimumWidth = 6;
             this.colTitle.Name = "colTitle";
             this.colTitle.ReadOnly = true;
-            // 
+    
             // colCategory
-            // 
+    
             this.colCategory.FillWeight = 15F;
             this.colCategory.HeaderText = "Category";
             this.colCategory.MinimumWidth = 6;
             this.colCategory.Name = "colCategory";
             this.colCategory.ReadOnly = true;
-            // 
+   
             // colDate
-            // 
+
             this.colDate.FillWeight = 15F;
             this.colDate.HeaderText = "Date";
             this.colDate.MinimumWidth = 6;
             this.colDate.Name = "colDate";
             this.colDate.ReadOnly = true;
-            // 
+    
             // colDescription
-            // 
+   
             this.colDescription.FillWeight = 45F;
             this.colDescription.HeaderText = "Description";
             this.colDescription.MinimumWidth = 6;
             this.colDescription.Name = "colDescription";
             this.colDescription.ReadOnly = true;
-            // 
+   
             // lblSearch
-            // 
+         
             this.lblSearch.AutoSize = true;
             this.lblSearch.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.lblSearch.Location = new System.Drawing.Point(30, 23);
@@ -169,9 +165,9 @@
             this.lblSearch.Size = new System.Drawing.Size(72, 23);
             this.lblSearch.TabIndex = 3;
             this.lblSearch.Text = "Search:";
-            // 
+
             // lblCategory
-            // 
+
             this.lblCategory.AutoSize = true;
             this.lblCategory.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.lblCategory.Location = new System.Drawing.Point(30, 63);
@@ -179,9 +175,9 @@
             this.lblCategory.Size = new System.Drawing.Size(88, 23);
             this.lblCategory.TabIndex = 4;
             this.lblCategory.Text = "Category:";
-            // 
+    
             // LocalEventsForm
-            // 
+
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
