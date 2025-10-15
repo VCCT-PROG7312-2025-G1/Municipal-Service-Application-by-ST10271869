@@ -66,7 +66,6 @@ namespace Municipal_Service_Application
                 // Check each event in the queue for that date
                 foreach (var ev in dateEvents)
                 {
-                // Case-insensitive comparison for better user experience
                     if (ev.Catergory.Equals(catergory, StringComparison.OrdinalIgnoreCase))
                     {
                         yield return ev; // Return matching event without creating a full list
@@ -79,7 +78,7 @@ namespace Municipal_Service_Application
                 // Retrieves all events in chronological order
         public IEnumerable<Event> GetAllEvents()
         {
-                // Iterate through dates in chronological order (SortedDictionary handles this)
+                // Iterats through dates in chronological order (SortedDictionary handles this)
             foreach (var dateEvents in eventSchedule)
             {
                 // Return each event for the current date
@@ -89,7 +88,7 @@ namespace Municipal_Service_Application
         }
 
        
-                // Returns the set of all unique categories currently registered 
+                // Returns the set of all unique categories
         public HashSet<string> GetCatergories()
         {
             return catergories;

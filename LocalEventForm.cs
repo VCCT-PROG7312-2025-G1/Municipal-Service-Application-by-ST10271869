@@ -32,6 +32,7 @@ namespace Municipal_Service_Application
             LoadCategories();
             LoadAllEvents();
             CreateRecommendButton();
+            txtSearch.KeyDown += txtSearch_KeyDown;
         }
 
         private void CreateRecommendButton()
@@ -148,15 +149,6 @@ namespace Municipal_Service_Application
             // Get the search text and convert to lowercase for case-insensitive search
             string searchText = txtSearch.Text.ToLower();
 
-            // Record user searches to analyze preferences
-            if (!string.IsNullOrWhiteSpace(searchText))
-            {
-                if (searchHistory.ContainsKey(searchText))
-                    searchHistory[searchText]++;
-                else
-                    searchHistory.Add(searchText, 1);
-            }
-
             // Clear grid for fresh search results
             dgvEvents.Rows.Clear();
 
@@ -180,6 +172,25 @@ namespace Municipal_Service_Application
             }
         }
 
+        private void txtSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                string searchText = txtSearch.Text.ToLower().Trim();
+
+                // Only track meaningful searches
+                if (!string.IsNullOrWhiteSpace(searchText) && searchText.Length >= 3)
+                {
+                    if (searchHistory.ContainsKey(searchText))
+                        searchHistory[searchText]++;
+                    else
+                        searchHistory.Add(searchText, 1);
+
+                    // Optional: Show confirmation
+                    // MessageBox.Show($"Recorded search: {searchText}");
+                }
+            }
+        }
 
         // Handles category filter changes in the ComboBox
         // Either shows all events or filters by selected category
@@ -205,7 +216,7 @@ namespace Municipal_Service_Application
         private List<Event> GetRecommendedEvents(string searchText)
         {
             List<Event> recommendedEvents = new List<Event>();
-            var allEvents = eventManager.GetAllEvents();
+            var allEvents = eventManager.GetAllEvents().ToList();
             string favouriteSearch = "";
 
             if (searchHistory.Count > 0)
@@ -214,50 +225,79 @@ namespace Municipal_Service_Application
                 favouriteSearch = searchHistory.OrderByDescending(s => s.Value).First().Key.ToLower();
             }
 
-            foreach (var ev in allEvents)
+            // Strategy 1: Recommend based on search history
+            if (!string.IsNullOrEmpty(favouriteSearch))
             {
-                // Skip events that exactly match what's currently being searched
-                bool isCurrentSearch = !string.IsNullOrEmpty(searchText) &&
-                                       (ev.Title.ToLower().Contains(searchText) ||
-                                        ev.Description.ToLower().Contains(searchText));
-
-                if (isCurrentSearch)
-                    continue;
-
-                // Recommend based on favourite search history OR similar categories
-                bool matchesFavourite = !string.IsNullOrEmpty(favouriteSearch) &&
-                                        (ev.Title.ToLower().Contains(favouriteSearch) ||
-                                         ev.Catergory.ToLower().Contains(favouriteSearch) ||
-                                         ev.Description.ToLower().Contains(favouriteSearch));
-
-                if (matchesFavourite)
+                foreach (var ev in allEvents)
                 {
-                    recommendedEvents.Add(ev);
+                    // Skip current search results
+                    if (!string.IsNullOrEmpty(searchText) &&
+                        (ev.Title.ToLower().Contains(searchText) ||
+                         ev.Description.ToLower().Contains(searchText)))
+                        continue;
+
+                    // Match favorite search in title, category, or description
+                    if (ev.Title.ToLower().Contains(favouriteSearch) ||
+                        ev.Catergory.ToLower().Contains(favouriteSearch) ||
+                        ev.Description.ToLower().Contains(favouriteSearch))
+                    {
+                        recommendedEvents.Add(ev);
+                    }
                 }
             }
 
-            // If no recommendations from search history, recommend upcoming events
-            if (recommendedEvents.Count == 0)
+            // Strategy 2: If we have recommendations, return them
+            if (recommendedEvents.Count > 0)
             {
-                recommendedEvents = allEvents.Take(5).ToList();
+                return recommendedEvents.Take(5).ToList();
             }
 
-            return recommendedEvents.Take(5).ToList();
+            // Strategy 3: If no history matches, recommend based on most searched categories
+            if (searchHistory.Count > 0)
+            {
+                // Get all searched terms and try to match categories
+                var searchedTerms = searchHistory.Keys.ToList();
+
+                foreach (var ev in allEvents)
+                {
+                    // Skip current search results
+                    if (!string.IsNullOrEmpty(searchText) &&
+                        (ev.Title.ToLower().Contains(searchText) ||
+                         ev.Description.ToLower().Contains(searchText)))
+                        continue;
+
+                    // Check if event category matches any searched term
+                    foreach (var term in searchedTerms)
+                    {
+                        if (ev.Catergory.ToLower().Contains(term.ToLower()))
+                        {
+                            recommendedEvents.Add(ev);
+                            break; // Don't add the same event twice
+                        }
+                    }
+                }
+
+                if (recommendedEvents.Count > 0)
+                {
+                    return recommendedEvents.Take(5).ToList();
+                }
+            }
+
+            // Strategy 4: Fallback - show upcoming events (sorted by date)
+            return allEvents
+                .Where(ev => ev.Date >= DateTime.Now) // Only future events
+                .Take(5)
+                .ToList();
         }
 
 
         private void BtnRecommend_Click(object sender, EventArgs e)
         {
-            // Get the current search text (if any)
-            string searchText = txtSearch?.Text?.ToLower() ?? "";
+            // Pass empty string so recommendations include what you searched for
+            List<Event> recommended = GetRecommendedEvents("");  
 
-            // Get recommended events
-            List<Event> recommended = GetRecommendedEvents(searchText);
-
-            // Clear the DataGridView
             dgvEvents.Rows.Clear();
 
-            // Display recommended events in the DataGridView
             foreach (var ev in recommended)
             {
                 dgvEvents.Rows.Add(
@@ -268,17 +308,27 @@ namespace Municipal_Service_Application
                 );
             }
 
-            // Optional: Show a message if no recommendations found
             if (recommended.Count == 0)
             {
-                MessageBox.Show("No recommendations available at this time.",
-                               "Recommendations",
-                               MessageBoxButtons.OK,
-                               MessageBoxIcon.Information);
+                if (searchHistory.Count == 0)
+                {
+                    MessageBox.Show("Please search for some events first, only then will the personalized recommendations work",
+                                   "Recommendations",
+                                   MessageBoxButtons.OK,
+                                   MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show($"No recommendations found based on your most searched term: '{searchHistory.OrderByDescending(s => s.Value).First().Key}'.\nTry searching for a different event",
+                                   "Recommendations",
+                                   MessageBoxButtons.OK,
+                                   MessageBoxIcon.Information);
+                }
             }
             else
             {
-                MessageBox.Show($"Showing {recommended.Count} recommended events based on your search history.",
+                string topSearch = searchHistory.OrderByDescending(s => s.Value).First().Key;
+                MessageBox.Show($"Showing {recommended.Count} events recommended based on your interest in '{topSearch}'.",
                                "Recommendations",
                                MessageBoxButtons.OK,
                                MessageBoxIcon.Information);
