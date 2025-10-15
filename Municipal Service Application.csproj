@@ -50,6 +50,12 @@
     <Compile Include="FileLinkedList.cs" />
     <Compile Include="Issue.cs" />
     <Compile Include="IssueLinkedList.cs" />
+    <Compile Include="LocalEventForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LocalEventForm.Designer.cs">
+      <DependentUpon>LocalEventForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

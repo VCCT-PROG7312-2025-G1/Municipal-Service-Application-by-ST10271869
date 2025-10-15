@@ -12,12 +12,79 @@ namespace Municipal_Service_Application
         private DataGridView dgvIssues;
         private Panel contentPanel;
 
+        private EventManager eventManager;
+
         public MainForm()
         {
             InitializeComponent();
             reportedIssues = new IssueLinkedList();
             nextIssueId = 1;
             SetupMainMenu();
+
+            eventManager = new EventManager();
+
+            initializeSampleEvents();
+
+        }
+
+        private void initializeSampleEvents()
+        {
+            eventManager.AddEvent(new Event(
+                "Community Clean-Up Day",
+                "Join us for a day of cleaning and making our neighbourhoods look great.",
+                new DateTime(2025, 10, 20),
+                "Community"
+                ));
+
+            eventManager.AddEvent(new Event(
+                "Municipal council meeting",
+                "Financial, urban waste management, and Planning and Resilience meeting.",
+                new DateTime(2025, 12, 2),
+                "Goverment"
+                ));
+
+            eventManager.AddEvent(new Event(
+                "Road Maintenance notice",
+                "N1 outbound lane construction to begin.",
+                new DateTime(2026, 02, 27),
+                "Infrastructure"
+                ));
+
+            eventManager.AddEvent(new Event(
+                "Cape Town Cycle Tour",
+                "Road closures to be expected from 04:00am to 13:00pm for the Cape Town Cycle Tour.",
+                new DateTime(2026, 03, 8),
+                "Community"
+                ));
+
+            eventManager.AddEvent(new Event(
+                "Annual Fun run",
+                "Join us at our annual 5km or 10km Fun run to raise awareness for cancer.",
+                new DateTime(2025, 12, 2),
+                "Community"
+                ));
+
+            eventManager.AddEvent(new Event(
+                "Eskom Load Shedding",
+                "Loadshedding to start up again in the next coming months.",
+                new DateTime(2026, 05, 2),
+                "Infrastructure"
+                ));
+
+            eventManager.AddEvent(new Event(
+                "Blood Drive",
+                "Join us at Western Cape blood service center, as we strive to supply the Cape with safe blood products.",
+                new DateTime(2026, 01, 29),
+                "Health"
+                ));
+
+            eventManager.AddEvent(new Event(
+                "Budget Meeting",
+                "Public consoltation on the 2026 municipal budget allocations.",
+                new DateTime(2026, 01, 25),
+                "Government"
+                ));
+
         }
 
         private void SetupMainMenu()
@@ -99,14 +166,19 @@ namespace Municipal_Service_Application
 
             var btnEvents = new Button
             {
-                Text = "Local Events (coming soon)",
+                Text = "Local Events & Announcements ",
                 Size = new Size(220, 44),
                 Location = new Point(20, 110),
                 FlatStyle = FlatStyle.Flat,
-                BackColor = Color.Gray,
-                ForeColor = Color.White,
-                Enabled = false
+                BackColor = Color.FromArgb(255, 184, 28), // SA Gold,
+                ForeColor = Color.Black,
+                Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                Enabled = true,
+
             };
+
+            btnEvents.FlatAppearance.BorderSize = 0;
+            btnEvents.Click += BtnEvents_Click;
 
             var btnStatus = new Button
             {
@@ -182,6 +254,14 @@ namespace Municipal_Service_Application
                         "Report Submitted", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
+        }
+
+        private void BtnEvents_Click(object sender, EventArgs e)
+        {
+            LocalEventsForm eventsForm = new LocalEventsForm(eventManager);
+
+            eventsForm.ShowDialog();
+
         }
 
         private void RefreshIssuesGrid()
