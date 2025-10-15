@@ -85,6 +85,20 @@ namespace Municipal_Service_Application
                 "Government"
                 ));
 
+            eventManager.AddEvent(new Event(
+                "Wine Market",
+                "Join us on chruch street for our 7th Wine Market.",
+                new DateTime(2026, 06, 10),
+                "Community"
+                ));
+
+            eventManager.AddEvent(new Event(
+                "Water pipe interruption",
+                "Scheduled maintenance on water pipes in plumstead for the August 2026.",
+                new DateTime(2026, 08, 08),
+                "Utilities"
+                ));
+
         }
 
         private void SetupMainMenu()

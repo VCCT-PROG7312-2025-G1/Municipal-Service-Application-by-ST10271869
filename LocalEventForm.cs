@@ -22,16 +22,50 @@ namespace Municipal_Service_Application
 
         private void LocalEventsForm_Load(object sender, EventArgs e)
         {
+
+            ApplySATheme();
+
             // Populate the category filter when form opens
             LoadCategories();
             // Display all events initially
             LoadAllEvents();
         }
 
-     
+        private void ApplySATheme()
+        {
+            // Style the DataGridView headers with SA colors
+            dgvEvents.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 11, FontStyle.Bold);
+            dgvEvents.ColumnHeadersDefaultCellStyle.BackColor = Color.Black;
+            dgvEvents.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgvEvents.ColumnHeadersDefaultCellStyle.Padding = new Padding(5);
+            dgvEvents.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+
+            // Style the data rows
+            dgvEvents.DefaultCellStyle.Font = new Font("Segoe UI", 9.5F);
+            dgvEvents.DefaultCellStyle.BackColor = Color.White;
+            dgvEvents.DefaultCellStyle.ForeColor = Color.Black;
+            dgvEvents.DefaultCellStyle.SelectionBackColor = Color.FromArgb(255, 184, 28); // SA Gold
+            dgvEvents.DefaultCellStyle.SelectionForeColor = Color.Black;
+            dgvEvents.DefaultCellStyle.Padding = new Padding(5);
+
+            // Alternating row colors for better readability
+            dgvEvents.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(245, 245, 245);
+            dgvEvents.AlternatingRowsDefaultCellStyle.SelectionBackColor = Color.FromArgb(255, 184, 28);
+            dgvEvents.AlternatingRowsDefaultCellStyle.SelectionForeColor = Color.Black;
+
+            // Style the search textbox with subtle gold border
+            txtSearch.BorderStyle = BorderStyle.FixedSingle;
+            txtSearch.BackColor = Color.White;
+
+            // Style the category combobox
+            cmbCategoryFilter.BackColor = Color.White;
+            cmbCategoryFilter.ForeColor = Color.Black;
+        }
+
+
         // Populates the ComboBox with available event categories
         // Adds "All Categories" as the default option
-     
+
         private void LoadCategories()
         {
             // Clear any existing items to avoid duplicates
