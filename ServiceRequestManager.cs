@@ -6,8 +6,6 @@ namespace Municipal_Service_Application
 {
 
     // Central manager that coordinates all data structures for service request tracking
-    // INTEGRATES: BST for searching, Heap for priority, Graph for dependencies
-    // WHY MULTIPLE STRUCTURES: Each optimized for different operations
     public class ServiceRequestManager
     {
         // BST for fast ID-based lookups - O(log n)
@@ -42,11 +40,6 @@ namespace Municipal_Service_Application
 
 
         // Adds a new service request to all data structures
-        // WHY ADD TO MULTIPLE: Each structure serves different query needs
-        // - BST: For ID-based search
-        // - Heap: For priority-based processing
-        // - Graph: For dependency tracking
-        // - StatusIndex: For status-based filtering
 
         public void AddRequest(ServiceRequest request)
         {
@@ -81,8 +74,6 @@ namespace Municipal_Service_Application
         }
 
         // Searches for a request by ID using BST
-        // Time Complexity: O(log n) - MUCH faster than linear search
-        // DEMONSTRATION: Shows BST efficiency for lookups
         public ServiceRequest SearchById(int id)
         {
             return requestBST.Search(id);
@@ -90,8 +81,6 @@ namespace Municipal_Service_Application
 
 
         // Gets requests filtered by status using hash table index
-        // Time Complexity: O(1) lookup + O(k) where k = number of matching requests
-        // DEMONSTRATION: Shows hash table efficiency for filtering
 
         public List<ServiceRequest> GetByStatus(ServiceRequestStatus status)
         {
@@ -100,8 +89,6 @@ namespace Municipal_Service_Application
 
 
         // Gets the highest priority pending request
-        // Time Complexity: O(1) - Shows heap efficiency
-        // USE CASE: Municipal worker gets next most urgent task
         public ServiceRequest GetNextHighestPriority()
         {
             return priorityQueue.Peek();
@@ -109,7 +96,6 @@ namespace Municipal_Service_Application
 
 
         // Updates a request's status and maintains all data structures
-        // IMPORTANT: Must update all indices to keep data consistent
         public void UpdateRequestStatus(int id, ServiceRequestStatus newStatus, string comment = "")
         {
             var request = SearchById(id);
@@ -133,8 +119,6 @@ namespace Municipal_Service_Application
 
 
         // Creates a dependency between two requests using graph
-        // EXAMPLE: Request 5 (streetlight) depends on Request 3 (electrical repair)
-        // USE CASE: Ensure prerequisite requests are completed first
         public void AddDependency(int requestId, int dependsOnId)
         {
             dependencyGraph.AddDependency(requestId, dependsOnId);
@@ -142,8 +126,6 @@ namespace Municipal_Service_Application
 
 
         // Gets all requests that depend on a given request using graph traversal
-        // USE CASE: When completing a request, see what can now proceed
-        // Time Complexity: O(V + E) using BFS
         public List<ServiceRequest> GetDependentRequests(int requestId)
         {
             var dependentIds = dependencyGraph.GetDependentRequests(requestId);
@@ -166,8 +148,6 @@ namespace Municipal_Service_Application
 
 
         // Finds all related requests using graph BFS traversal
-        // DEMONSTRATION: Shows graph traversal for finding connected components
-        // USE CASE: Impact analysis - see entire chain of related requests
         public List<ServiceRequest> GetRelatedRequests(int requestId)
         {
             var relatedIds = dependencyGraph.BFS(requestId);
@@ -184,8 +164,6 @@ namespace Municipal_Service_Application
         }
 
         // Gets all requests sorted by ID using BST in-order traversal
-        // Time Complexity: O(n)
-        // DEMONSTRATION: Shows BST property of sorted output
         public List<ServiceRequest> GetAllSortedById()
         {
             return requestBST.GetAllSorted();
@@ -200,7 +178,7 @@ namespace Municipal_Service_Application
 
 
         // Searches requests by location or description
-        // Uses linear search as this is text-based (no specific structure advantage)
+        // Uses linear search as this is text-based 
         public List<ServiceRequest> SearchByText(string searchTerm)
         {
             if (string.IsNullOrWhiteSpace(searchTerm))
@@ -216,7 +194,6 @@ namespace Municipal_Service_Application
 
 
         // Gets statistics about service requests
-        // Useful for dashboard display
         public ServiceRequestStatistics GetStatistics()
         {
             return new ServiceRequestStatistics

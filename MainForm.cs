@@ -32,7 +32,7 @@ namespace Municipal_Service_Application
             initializeSampleEvents();
             InitializeSampleServiceRequests();
 
-            // Setup UI (only once!)
+            // Setup UI 
             SetupMainMenu();
         }
 
@@ -90,7 +90,6 @@ namespace Municipal_Service_Application
 
         // Initializes sample service requests to demonstrate data structures
         // Creates requests with varying priorities and statuses
-        // Demonstrates: BST insertion, Heap prioritization, Graph dependencies
         private void InitializeSampleServiceRequests()
         {
             // Create sample requests with different priorities
@@ -176,7 +175,7 @@ namespace Municipal_Service_Application
             request6.UpdateStatus(ServiceRequestStatus.Pending, "Awaiting completion of electrical infrastructure");
             serviceRequestManager.AddRequest(request6);
 
-            // DEMONSTRATE GRAPH: Request 6 depends on Request 3 (water leak must be fixed first for electrical work)
+        // Request 6 depends on Request 3 
             serviceRequestManager.AddDependency(6, 3);
             serviceRequestManager.AddDependency(1, 3);
         }
@@ -262,7 +261,7 @@ namespace Municipal_Service_Application
             btnEvents.FlatAppearance.BorderSize = 0;
             btnEvents.Click += BtnEvents_Click;
 
-            // Service Request Status button (now functional!)
+            // Service Request Status button 
             var btnStatus = new Button
             {
                 Text = "Service Request Status",
@@ -275,7 +274,7 @@ namespace Municipal_Service_Application
                 Enabled = true  // NOW ENABLED!
             };
             btnStatus.FlatAppearance.BorderSize = 0;
-            btnStatus.Click += BtnStatus_Click;  // NEW HANDLER
+            btnStatus.Click += BtnStatus_Click;  
 
             nav.Controls.Add(btnReportIssues);
             nav.Controls.Add(btnEvents);
@@ -388,10 +387,8 @@ namespace Municipal_Service_Application
             eventsForm.ShowDialog();
         }
 
-        /// <summary>
-        /// Opens the Service Request Status form
-        /// Demonstrates all advanced data structures (BST, Heap, Graph)
-        /// </summary>
+   
+        // Opens the Service Request Status form
         private void BtnStatus_Click(object sender, EventArgs e)
         {
             ServiceRequestStatusForm statusForm = new ServiceRequestStatusForm(serviceRequestManager);

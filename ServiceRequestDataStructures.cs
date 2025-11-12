@@ -14,7 +14,7 @@ namespace Municipal_Service_Application
 {
     public enum ServiceRequestStatus
     {
-        // Submitted = Just Submitted, InProgress = Being Worked On, Delayed = On Hold, Completed = Finished, Rejected = Denied
+        // Submitted = Just Submitted, InProgress = Being Worked On,  Completed = Finished, Rejected = Denied
         Pending, InProgress, Resolved, Rejected
     }
 
@@ -255,7 +255,7 @@ namespace Municipal_Service_Application
             }
         }
 
-        // Add a dependency (edge) from one request to another
+        // Add a dependency from one request to another
         public void AddDependency(int fromRequestId, int toRequestId)
         {
             AddRequest(fromRequestId);

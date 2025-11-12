@@ -124,8 +124,6 @@ namespace Municipal_Service_Application
 
 
         // Returns appropriate color for each status
-        // Visual indicators help users quickly assess request state
-
         private Color GetStatusColor(ServiceRequestStatus status)
         {
             return status switch
@@ -140,7 +138,6 @@ namespace Municipal_Service_Application
 
 
         // Handles search functionality
-        // Demonstrates BST search for ID or text search for other fields
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
@@ -175,7 +172,6 @@ namespace Municipal_Service_Application
 
 
         // Handles status filter changes
-        // Uses hash table index for O(1) status filtering
 
         private void cmbStatusFilter_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -203,7 +199,6 @@ namespace Municipal_Service_Application
 
 
         // Shows detailed view of a request including status history
-        // Double-click a row to see full details
 
         private void dgvRequests_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -219,9 +214,8 @@ namespace Municipal_Service_Application
         }
 
 
-        // Displays detailed information about a service request
-        // Includes full status history timeline
 
+        // Displays detailed information about a service request
         private void ShowRequestDetails(ServiceRequest request)
         {
             string details = $"\n";
@@ -277,7 +271,6 @@ namespace Municipal_Service_Application
 
 
         // Updates and displays statistics panel
-        // Shows real-time counts and metrics
 
         private void UpdateStatistics()
         {
@@ -292,8 +285,7 @@ namespace Municipal_Service_Application
         }
 
 
-        // Simulates status update (for demonstration purposes)
-        // In production, this would be admin-only functionality
+        // Simulates status update 
 
         private void btnUpdateStatus_Click(object sender, EventArgs e)
         {
@@ -308,7 +300,6 @@ namespace Municipal_Service_Application
 
             if (request == null) return;
 
-            // Simple status progression for demo
             var nextStatus = request.Status switch
             {
                 ServiceRequestStatus.Pending => ServiceRequestStatus.InProgress,
@@ -328,7 +319,6 @@ namespace Municipal_Service_Application
 
 
         // Shows the highest priority request from the heap
-        // Demonstrates Min-Heap peek operation (O(1))
 
         private void btnShowNextPriority_Click(object sender, EventArgs e)
         {
@@ -365,16 +355,15 @@ namespace Municipal_Service_Application
 
             if (selectedRequest == null) return;
 
-            // Get dependencies (what this request depends on)
+            // Get dependencies 
             var dependencies = requestManager.GetDependencies(selectedId);
 
-            // Get dependent requests (what depends on this request)
+            // Get dependent requests 
             var dependents = requestManager.GetDependentRequests(selectedId);
 
             // Get all related requests using BFS
             var related = requestManager.GetRelatedRequests(selectedId);
 
-            // Build message
             string message = $"DEPENDENCY GRAPH ANALYSIS\n";
             message += $"\n\n";
             message += $"Request #{selectedId}\n";
